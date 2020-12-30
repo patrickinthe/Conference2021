@@ -2,5 +2,5 @@ theme: jekyll-theme-cayman
 title: 만리2구역 2021년 1분기 임시총회 안내
 github:
   is_project_page: false
-after_footer_scripts:
-  - /ga.js
+site-js:
+  - "/ga.js"

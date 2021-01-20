@@ -1,0 +1,137 @@
+<script>
+  function computeLoss(your_money_id, total_loss_id, current_percentage, your_loss_id, detail_id,
+           later_total_loss_id, later_current_percentage, later_your_loss_id) {
+    function computeDayFrom(from_date, to_date) {
+      if (!to_date) {
+        to_date = new Date()
+      }
+      var from = new Date(from_date)
+      var dayInMs = 1000 * 3600 * 24;
+      var day = Math.floor((to_date - from) / dayInMs);
+      return day;
+    }
+    function computeInterestTotal(org, from_date, interest_in_percentage, to_date) {
+      var day = computeDayFrom(from_date, to_date);
+      return org * (interest_in_percentage / 100) / 365 * day;
+    }
+
+
+    var loss_total = 0;
+    var loss_html = "";
+    // GS건설 손해 계산
+    // 1. 직접대여금(준공이전) 미상환액 (도급계약서 제 39조 2항/금전소비대차 계약서 제 6조)
+    var gs1 =  372237120;
+    // 1-1 직접대여금(준공 이전) 연체이자
+    var gs1_1 = computeInterestTotal(gs1, "2017-10-19", 19);
+    // 2. 공사비 미상환액 (도급계약서 제 42조 3항)
+    var gs2 =   3794084705;
+    // 2-1 공사비 연체이자
+    var gs2_1 =  computeInterestTotal(gs2, "2018-12-21", 19);
+    // 3. 직접 대여금(입주지정기간 이후)
+    var gs3 =  749165600;
+    // 3-1. 직접 대여금 이자
+    var gs3_1 = computeInterestTotal(718705310, "2018-12-31", 6);
+    var gs3_2 = computeInterestTotal(28000000, "2019-02-18", 6);
+    var gs3_3 = computeInterestTotal(774260, "2019-04-10", 6);
+    var gs3_4 = computeInterestTotal(204030, "2019-04-30", 6);
+    var gs3_5 = computeInterestTotal(1482000, "2019-07-31", 6);
+
+    var gs_org = gs1 + gs2 + gs3
+    var gs_interest = gs1_1 + gs2_1 + gs3_1 + gs3_2 + gs3_3 + gs3_4 + gs3_5
+    loss_total += gs_org + gs_interest;
+
+    loss_html += "<div>"
+    loss_html += "<strong>GS건설 미납급 및 이자</strong><br>"
+    loss_html += "미납금 종류 별로 이자 다름. 최대 19%<br>"
+    loss_html += "GS건설 원금은 약 " + (gs_org/100000000).toFixed(1) + "억 <br>"
+    loss_html += "GS건설 이자는 약 " + (gs_interest/100000000).toFixed(1) + "억 <br>"
+    loss_html += "</div>"
+    loss_html += "<br>"
+
+    // 일반분양자 손해 계산(2020가합50013)
+    // 현재 소송건 세대는 284세대
+    // 2018년 9월 26일부터 조합의 배상책임이 존재
+    // var ilbun = 865300274 / 365 * computeDayFrom("2018-09-26");
+    var ilbun = 284 * 3000000 / 365 * computeDayFrom("2018-09-26");
+    loss_total += ilbun;
+
+    loss_html += "<div>"
+    loss_html += "<strong>일반분양자 등기지연소송에 대한 손해(이자제외)</strong><br>"
+    loss_html += "일반분양자 배상액은 세대당 연 약300만원 추정되고, 284세대가 소송에 참여했습니다.<br>"
+    loss_html += "배상액은 이자제외 약 " + (ilbun/100000000).toFixed(1) + "억 <br>"
+    loss_html += "</div>"
+    loss_html += "<br>"
+
+    // 법조 5.6억
+    // 루비콘 2억
+    // 마광자 2억
+    loss_total += 560000000 + 200000000 + 200000000;
+
+    loss_html += "<div>"
+    loss_html += "<strong>조합이 패소한 소송에 의한 손해(이자제외)</strong><br>"
+    loss_html += "법무법인 법조에 5.6억<br>"
+    loss_html += "루비콘에 2억<br>"
+    loss_html += "마광X(OS)에 2억<br>"
+    loss_html += "</div>"
+    
+    try {
+      document.getElementById(detail_id).innerHTML = loss_html;
+    } catch (e) {console.log(e)}
+    try {
+      document.getElementById(total_loss_id).innerHTML = "약" + (loss_total/100000000).toFixed(1) + "억원";
+    } catch (e) {console.log(e)}
+    try {
+      var cp = 1 - (loss_total/173800000000);
+      var l = (loss_total/173800000000)
+      document.getElementById(current_percentage).innerHTML = "약" + (cp * 100).toFixed(1) + "%";
+    } catch (e) {console.log(e)}
+    try {
+      var l = (loss_total/173800000000)
+      var money = document.getElementById(your_money_id).value * 10000
+      document.getElementById(your_loss_id).innerHTML = "약" + Math.floor(l * money / 10000) + "만원"
+    } catch (e) {console.log(e)}
+    
+    
+    // 1년후 계산
+    var later_date = new Date();
+    later_date.setFullYear(later_date.getFullYear() + 1);
+    var loss_total = 0;
+    var gs1_1 = computeInterestTotal(gs1, "2017-10-19", 19, later_date);
+    var gs2_1 =  computeInterestTotal(gs2, "2018-12-21", 19, later_date);
+    var gs3_1 = computeInterestTotal(718705310, "2018-12-31", 6, later_date);
+    var gs3_2 = computeInterestTotal(28000000, "2019-02-18", 6, later_date);
+    var gs3_3 = computeInterestTotal(774260, "2019-04-10", 6, later_date);
+    var gs3_4 = computeInterestTotal(204030, "2019-04-30", 6, later_date);
+    var gs3_5 = computeInterestTotal(1482000, "2019-07-31", 6, later_date);
+    var gs_interest = gs1_1 + gs2_1 + gs3_1 + gs3_2 + gs3_3 + gs3_4 + gs3_5
+    loss_total += gs_org + gs_interest;
+    var ilbun = 284 * 3000000 / 365 * computeDayFrom("2018-09-26", later_date);
+    loss_total += ilbun;
+    // 법조 5.6억
+    // 루비콘 2억
+    // 마광자 2억
+    loss_total += 560000000 + 200000000 + 200000000;
+    
+    try {
+      document.getElementById(later_total_loss_id).innerHTML = "약" + (loss_total/100000000).toFixed(1) + "억원";
+    } catch (e) {console.log(e)}
+    try {
+      var cp = 1 - (loss_total/173800000000);
+      var l = (loss_total/173800000000)
+      document.getElementById(later_current_percentage).innerHTML = "약" + (cp * 100).toFixed(1) + "%";
+    } catch (e) {console.log(e)}
+    try {
+      var l = (loss_total/173800000000)
+      var money = document.getElementById(your_money_id).value * 10000
+      document.getElementById(later_your_loss_id).innerHTML = "약" + Math.floor(l * money / 10000) + "만원"
+    } catch (e) {console.log(e)}
+  }
+
+  document.getElementById("your_money").addEventListener("input", function () {
+    computeLoss("your_money","total_loss", "current_percentage", "your_loss", "detail",
+               "later_total_loss", "later_current_percentage", "later_your_loss")
+  });
+  document.getElementById("your_money").value = 24000
+  computeLoss("your_money","total_loss", "current_percentage", "your_loss", "detail",
+             "later_total_loss", "later_current_percentage", "later_your_loss")
+</script>

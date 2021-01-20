@@ -52,12 +52,12 @@
     // 현재 소송건 세대는 284세대
     // 2018년 9월 26일부터 조합의 배상책임이 존재
     // var ilbun = 865300274 / 365 * computeDayFrom("2018-09-26");
-    var ilbun = 284 * 3000000 / 365 * computeDayFrom("2018-09-26");
+    var ilbun = 192 * 3500000 / 365 * computeDayFrom("2018-09-26");
     loss_total += ilbun;
 
     loss_html += "<div>"
     loss_html += "<strong>일반분양자 등기지연소송에 대한 손해(이자제외)</strong><br>"
-    loss_html += "일반분양자 배상액은 세대당 연 약300만원 추정되고, 284세대가 소송에 참여했습니다.<br>"
+    loss_html += "일반분양자 배상액은 세대당 연 약350만원 추정되고, 192세대가 소송에 참여했습니다.<br>"
     loss_html += "배상액은 이자제외 약 " + (ilbun/100000000).toFixed(1) + "억 <br>"
     loss_html += "</div>"
     loss_html += "<br>"
@@ -105,7 +105,7 @@
     var gs3_5 = computeInterestTotal(1482000, "2019-07-31", 6, later_date);
     var gs_interest = gs1_1 + gs2_1 + gs3_1 + gs3_2 + gs3_3 + gs3_4 + gs3_5
     loss_total += gs_org + gs_interest;
-    var ilbun = 284 * 3000000 / 365 * computeDayFrom("2018-09-26", later_date);
+    var ilbun = 192 * 3500000 / 365 * computeDayFrom("2018-09-26", later_date);
     loss_total += ilbun;
     // 법조 5.6억
     // 루비콘 2억

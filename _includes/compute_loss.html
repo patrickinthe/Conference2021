@@ -16,7 +16,7 @@
     }
 
 
-    var loss_total = 0;
+    var loss_total = -2900000000;
     var loss_html = "";
     // GS건설 손해 계산
     // 1. 직접대여금(준공이전) 미상환액 (도급계약서 제 39조 2항/금전소비대차 계약서 제 6조)
@@ -75,6 +75,12 @@
     loss_html += "마광X(OS)에 2억<br>"
     loss_html += "</div>"
     
+    loss_html += "<div>"
+    loss_html += "<strong>조합자산</strong><br>"
+    loss_html += "임대주택 잔금 27억<br>"
+    loss_html += "사무실 보증금 2억<br>"
+    loss_html += "</div>"
+    
     try {
       document.getElementById(detail_id).innerHTML = loss_html;
     } catch (e) {console.log(e)}
@@ -96,7 +102,7 @@
     // 1년후 계산
     var later_date = new Date();
     later_date.setFullYear(later_date.getFullYear() + 1);
-    var loss_total = 0;
+    var loss_total = -2900000000;
     var gs1_1 = computeInterestTotal(gs1, "2017-10-19", 19, later_date);
     var gs2_1 =  computeInterestTotal(gs2, "2018-12-21", 19, later_date);
     var gs3_1 = computeInterestTotal(718705310, "2018-12-31", 6, later_date);

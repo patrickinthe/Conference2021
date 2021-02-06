@@ -16,7 +16,7 @@
     }
 
 
-    var loss_total = -1900000000;
+    var loss_total = -2900000000;
     var loss_html = "";
     // GS건설 손해 계산
     // 1. 직접대여금(준공이전) 미상환액 (도급계약서 제 39조 2항/금전소비대차 계약서 제 6조)
@@ -76,9 +76,15 @@
     loss_html += "</div>"
     loss_html += "<br>"
     
+    loss_total += 1260000000;
     loss_html += "<div>"
-    loss_html += "<strong>조합 기본 운영 예산</strong><br>"
-    loss_html += "10억<br>"
+    loss_html += "<strong>기타 지급 해야할 비용</strong><br>"
+    loss_html += "대지면적 감소로 인한 일분자 환급급 2억<br>"
+    loss_html += "전기감리+친환경 미지급금 0.7억<br>"
+    loss_html += "파출소 미지급 공사비 0.2억<br>"
+    loss_html += "그간의 총회비 6억<br>"
+    loss_html += "해산시 까지 조합 운영비 1.7억<br>"
+    loss_html += "기타 자잘한 패소한 소송 및 미지급등 2억<br>"
     loss_html += "</div>"
     loss_html += "<br>"
     
@@ -109,7 +115,7 @@
     // 1년후 계산
     var later_date = new Date();
     later_date.setFullYear(later_date.getFullYear() + 1);
-    var loss_total = -1900000000;
+    var loss_total = -2900000000;
     var gs1_1 = computeInterestTotal(gs1, "2017-10-19", 19, later_date);
     var gs2_1 =  computeInterestTotal(gs2, "2018-12-21", 19, later_date);
     var gs3_1 = computeInterestTotal(718705310, "2018-12-31", 6, later_date);
@@ -125,6 +131,9 @@
     // 루비콘 2억
     // 마광자 2억
     loss_total += 560000000 + 200000000 + 200000000;
+    
+    // 
+    loss_total += 1260000000;
     
     try {
       document.getElementById(later_total_loss_id).innerHTML = "약" + (loss_total/100000000).toFixed(1) + "억원";

@@ -1,5 +1,5 @@
 ## 등기가 우선입니다
-[공문](/document.png)
+![공문](/document.png)
 <br/>
 <br/>
 
